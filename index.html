@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoRent - Аренда автомобилей премиум класса</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --gray: #64748b;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-btn {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-btn {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            background: var(--primary);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Car Listings */
+        .car-listings {
+            padding: 5rem 5%;
+            background: var(--light);
+        }
+
+        .car-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .car-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .car-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .car-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .car-card:hover .car-img img {
+            transform: scale(1.05);
+        }
+
+        .car-info {
+            padding: 1.5rem;
+        }
+
+        .car-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .car-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .car-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .car-price span {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        .car-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .car-detail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .car-detail i {
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .car-detail span {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .rent-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .rent-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 5%;
+            background: white;
+            text-align: center;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: """;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.1;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 5%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-info {
+            padding-right: 2rem;
+        }
+
+        .contact-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-detail i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: var(--accent);
+        }
+
+        .contact-form form {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .submit-btn {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: #e69008;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-col h3::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* GitHub Banner */
+        .github-banner {
+            position: fixed;
+            top: 20px;
+            right: -80px;
+            background: #333;
+            color: white;
+            padding: 10px 40px;
+            transform: rotate(45deg);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .github-banner a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .github-banner {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin: 1.5rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-btn {
+                padding: 12px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- GitHub Banner -->
+    <div class="github-banner">
+        <a href="https://github.com/yourusername/car-rental-website" target="_blank">View on GitHub</a>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-car"></i>
+                AutoRent
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#cars">Автомобили</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#testimonials">Отзывы</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+            <button class="nav-btn">Забронировать</button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Аренда автомобилей премиум класса</h1>
+            <p>Выберите идеальный автомобиль для вашего путешествия по лучшим ценам</p>
+            <button class="hero-btn">Найти автомобиль</button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-title">
+            <h2>Почему выбирают нас</h2>
+            <p>Мы предлагаем лучший сервис по аренде автомобилей с гарантией качества</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <h3>Лучшие цены</h3>
+                <p>Гарантируем самые конкурентоспособные цены на рынке без скрытых платежей</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-car"></i>
+                </div>
+                <h3>Большой выбор</h3>
+                <p>Более 200 автомобилей различных классов от эконом до премиум</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Поддержка 24/7</h3>
+                <p>Наша служба поддержки всегда готова помочь вам в любое время</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>Множество офисов</h3>
+                <p>Более 50 пунктов аренды по всей стране для вашего удобства</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Car Listings Section -->
+    <section class="car-listings" id="cars">
+        <div class="section-title">
+            <h2>Наш автопарк</h2>
+            <p>Выберите автомобиль, который подходит именно вам</p>
+        </div>
+        <div class="car-filters">
+            <button class="filter-btn active">Все</button>
+            <button class="filter-btn">Эконом</button>
+            <button class="filter-btn">Средний класс</button>
+            <button class="filter-btn">Премиум</button>
+            <button class="filter-btn">Внедорожники</button>
+        </div>
+        <div class="cars-grid">
+            <div class="car-card">
+                <div class="car-img">
+                    <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Audi A6">
+                </div>
+                <div class="car-info">
+                    <div class="car-header">
+                        <h3 class="car-title">Audi A6</h3>
+                        <div class="car-price">$89<span>/день</span></div>
+                    </div>
+                    <div class="car-details">
+                        <div class="car-detail">
+                            <i class="fas fa-car"></i>
+                            <span>Седан</span>
+                        </div>
+                        <div class="car-detail">
+                            <i class="fas fa-gas-pump"></i>
+                            <span>Бензин</span>
+                        </div>
+                        <div class="car-detail">
+                            <i class="fas fa-cogs"></i>
+                            <span>Автомат</span>
+                        </div>
+                    </div>
+                    <button class="rent-btn">Арендовать сейчас</button>
+                </div>
+            </div>
+            <div class="car-card">
+                <div class="car-img">
+                    <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1111&q=80" alt="BMW X5">
+                </div>
+                <div class="car-info">
+                    <div class="car-header">
+                        <h3 class="car-title">BMW X5</h3>
+                        <div class="car-price">$129<span>/день</span></div>
+                    </div>
+                    <div class="car-details">
+                        <div class="car-detail">
+                            <i class="fas fa-car"></i>
+                            <span>Внедорожник</span>
+                        </div>
+                        <div class="car-detail">
+                            <i class="fas fa-gas-pump"></i>
+                            <span>Дизель</span>
+                        </div>
+                        <div class="car-detail">
+                            <i class="fas fa-cogs"></i>
+                            <span>Автомат</span>
+                        </div>
+                    </div>
+                    <button class="rent-btn">Арендовать сейчас</button>
+                </div>
+            </div>
+            <div class="car-card">
+                <div class="car-img">
+                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Porsche 911">
+                </div>
+                <div class="car-info">
+                    <div class="car-header">
+                        <h3 class="car-title">Porsche 911</h3>
+                        <div class="car-price">$199<span>/день</span></div>
+                    </div>
+                    <div class="car-details">
+                        <div class="car-detail">
+                            <i class="fas fa-car"></i>
+                            <span>Спорткар</span>
+                        </div>
+                        <div class="car-detail">
+                            <i class="fas fa-gas-pump"></i>
+                            <span>Бензин</span>
+                        </div>
+                        <div class="car-detail">
+                            <i class="fas fa-cogs"></i>
+                            <span>Автомат</span>
+                        </div>
+                    </div>
+                    <button class="rent-btn">Арендовать сейчас</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-title">
+            <h2>Отзывы клиентов</h2>
+            <p>Что говорят наши клиенты о нашем сервисе</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-content">Отличный сервис! Автомобиль был в идеальном состоянии, процесс аренды занял не более 10 минут. Обязательно буду пользоваться снова.</p>
+                <div class="testimonial-author">
+                    <div class="author-img">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Иван Петров">
+                    </div>
+                    <div class="author-info">
+                        <h4>Иван Петров</h4>
+                        <p>Клиент</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-content">Взял BMW X5 на выходные для поездки за город. Машина просто супер! Отличное состояние, полный бак бензина. Сервис на высшем уровне.</p>
+                <div class="testimonial-author">
+                    <div class="author-img">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Елена Смирнова">
+                    </div>
+                    <div class="author-info">
+                        <h4>Елена Смирнова</h4>
+                        <p>Клиент</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-content">Регулярно арендую автомобили у этой компании в командировки. Всегда новые, чистые машины. Персонал вежливый и профессиональный.</p>
+                <div class="testimonial-author">
+                    <div class="author-img">
+                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Алексей Иванов">
+                    </div>
+                    <div class="author-info">
+                        <h4>Алексей Иванов</h4>
+                        <p>Клиент</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h2>Свяжитесь с нами</h2>
+                <p>Есть вопросы? Наша команда поддержки всегда готова помочь вам с любыми вопросами по аренде автомобилей.</p>
+                <div class="contact-detail">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h4>Адрес</h4>
+                        <p>ул. Автомобильная, 25, Москва</p>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <h4>Телефон</h4>
+                        <p>+7 (495) 123-45-67</p>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>Email</h4>
+                        <p>info@autorent.ru</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Ваше имя</label>
+                        <input type="text" id="name" placeholder="Иван Иванов">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="example@mail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" placeholder="+7 (900) 123-45-67">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Сообщение</label>
+                        <textarea id="message" rows="4" placeholder="Ваше сообщение..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Отправить сообщение</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>AutoRent</h3>
+                <p>Лучший сервис по аренде автомобилей с гарантией качества и доступными ценами.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Навигация</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Главная</a></li>
+                    <li><a href="#cars">Автомобили</a></li>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#testimonials">Отзывы</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Автомобили</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Эконом класс</a></li>
+                    <li><a href="#">Средний класс</a></li>
+                    <li><a href="#">Премиум класс</a></li>
+                    <li><a href="#">Внедорожники</a></li>
+                    <li><a href="#">Минивэны</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Поддержка</h3>
+                <ul class="footer-links">
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Условия аренды</a></li>
+                    <li><a href="#">Политика конфиденциальности</a></li>
+                    <li><a href="#">Помощь</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 AutoRent. Все права защищены. | Проект на <a href="https://github.com/yourusername/car-rental-website" target="_blank" style="color: var(--accent);">GitHub</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter buttons
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                });
+            });
+
+            // Rent buttons
+            const rentBtns = document.querySelectorAll('.rent-btn');
+            rentBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const carCard = this.closest('.car-card');
+                    const carName = carCard.querySelector('.car-title').textContent;
+                    alert(`Вы выбрали аренду автомобиля: ${carName}. Скоро с вами свяжется наш менеджер!`);
+                });
+            });
+
+            // Navigation scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Form submission
+            const contactForm = document.querySelector('.contact-form form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
+                    this.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
